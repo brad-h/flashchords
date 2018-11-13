@@ -77,7 +77,7 @@ const data = [
   diminished("B D G Ab")
 ];
 
-document.onload = () => {
+document.onload(() => {
   const app = document.getElementById("app");
   const quiz = document.getElementById("quiz");
   const show = document.getElementById("show");
@@ -91,4 +91,4 @@ document.onload = () => {
       quiz.innerText = lookup.notes;
     });
   });
-};
+});
