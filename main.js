@@ -1,15 +1,15 @@
-const chord = (symbol, notes) => {
+const createChord = (symbol, notes) => {
   const note = notes.split(" ");
   return {
   "name": note[0] + symbol,
   "notes": notes.split(" ")
   };
 };
-const major = notes => chord("M7", notes);
-const dominant = notes => chord("7", notes);
-const minor = notes => chord("m7", notes);
-const halfDiminished = notes => chord("m7b5", notes);
-const diminished = notes => chord("dim", notes);
+const major = notes => createChord("M7", notes);
+const dominant = notes => createChord("7", notes);
+const minor = notes => createChord("m7", notes);
+const halfDiminished = notes => createChord("m7b5", notes);
+const diminished = notes => createChord("dim", notes);
 
 // there's probably a clever/cute way to derive all this
 // information that I'm not going to bother to figure
@@ -77,7 +77,39 @@ const data = [
   diminished("B D G Ab")
 ];
 
-const getNext = () => data[Math.floor(Math.random() * data.length)];
+const getInversion = chord => {
+  const i = Math.floor(Math.random() * chord.notes.length);
+  const inversion = chord.notes.slice(i).concat(chord.notes.slice(0, i));
+  switch (i) {
+    case 0:
+      return {
+        "name": chord.name,
+        "notes": inversion
+      };
+    case 1:
+      return {
+        "name": chord.name + " 1st inversion",
+        "notes": inversion
+      };
+    case 2:
+      return {
+        "name": chord.name + " 2nd inversion",
+        "notes": inversion
+      };
+    case 3:
+      return {
+        "name": chord.name + " 3rd inversion",
+        "notes": inversion
+      };
+    default:
+      throw "What? How?";
+  }
+};
+
+const getNext = () => {
+  const next = data[Math.floor(Math.random() * data.length)];
+  return getInversion(next);
+};
 let lookup = getNext();
 
 const showName = () => {
