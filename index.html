@@ -10,18 +10,9 @@
 </head>
 <body>
     <div id="app">
+        <button id="show" onmousedown="showNotes()" onmouseup="showName()">Show</button>
         <button id="next" onclick="nextCard()">Next</button>
-        <!-- https://davidwalsh.name/css-flip -->
-        <div class="flip-container" ontouchstart="this.classList.toggle('hover');">
-            <div class="flipper">
-                <div class="front">
-                    <!-- front content -->
-                </div>
-                <div class="back">
-                    <!-- back content -->
-                </div>
-            </div>
-        </div>
+        <h1 id="content"></h1>
     </div>
 </body>
 </html>

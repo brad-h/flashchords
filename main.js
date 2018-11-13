@@ -81,22 +81,15 @@ const getNext = () => data[Math.floor(Math.random() * data.length)];
 let lookup = getNext();
 
 const showName = () => {
-  const front = document.getElementsByClassName("front");
-  Array.from(front).forEach(x => x.innerText = lookup.name);
+  document.getElementById("content").innerText = lookup.name;
 }
 const showNotes = () => {
-  const back = document.getElementsByClassName("back");
-  Array.from(back).forEach(x => x.innerText = lookup.notes);
-};
-
-const paint = () => {
-  showName();
-  showNotes();
+  document.getElementById("content").innerText = lookup.notes;
 };
 
 const nextCard = () => {
   lookup = getNext();
-  paint();
+  showName();
 };
 
-document.addEventListener('DOMContentLoaded', paint);
+document.addEventListener('DOMContentLoaded', nextCard);
