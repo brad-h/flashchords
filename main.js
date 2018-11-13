@@ -77,18 +77,17 @@ const data = [
   diminished("B D G Ab")
 ];
 
-document.onload(() => {
-  const app = document.getElementById("app");
-  const quiz = document.getElementById("quiz");
-  const show = document.getElementById("show");
-  const next = document.getElementById("next");
-  
-  next.click(() => {
-    const rand = Math.floor(Math.random() * data.length);
-    const lookup = data[rand];
-    quiz.innerText = lookup.name;
-    show.click(() => {
-      quiz.innerText = lookup.notes;
-    });
+
+const app = document.getElementById("app");
+const quiz = document.getElementById("quiz");
+const show = document.getElementById("show");
+const next = document.getElementById("next");
+
+next.click(() => {
+  const rand = Math.floor(Math.random() * data.length);
+  const lookup = data[rand];
+  quiz.innerText = lookup.name;
+  show.click(() => {
+    quiz.innerText = lookup.notes;
   });
 });
