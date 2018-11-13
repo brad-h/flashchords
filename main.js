@@ -80,16 +80,23 @@ const data = [
 const getNext = () => data[Math.floor(Math.random() * data.length)];
 let lookup = getNext();
 
-const nextCard = () => {
-  lookup = getNext();
-  quiz.innerText = lookup.name;
-};
-
 const showName = () => {
-  quiz.innerText = lookup.name;
+  const front = document.getElementsByClassName("front");
+  Array.from(front).forEach(x => x.innerText = lookup.name);
 }
 const showNotes = () => {
-  quiz.innerText = lookup.notes;
+  const back = document.getElementsByClassName("back");
+  Array.from(back).forEach(x => x.innerText = lookup.notes);
 };
 
-document.addEventListener('DOMContentLoaded', showName);
+const paint = () => {
+  showName();
+  showNotes();
+};
+
+const nextCard = () => {
+  lookup = getNext();
+  paint();
+};
+
+document.addEventListener('DOMContentLoaded', paint);
