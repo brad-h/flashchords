@@ -135,6 +135,8 @@ const showToggle = () => {
 const nextCard = () => {
   lookup = getNext();
   showName();
+  showState = true;
+  showToggle();
 };
 
 document.addEventListener('DOMContentLoaded', nextCard);
