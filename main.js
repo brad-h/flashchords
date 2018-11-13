@@ -87,6 +87,19 @@ const showNotes = () => {
   document.getElementById("content").innerText = lookup.notes;
 };
 
+let showState = false;
+const showToggle = () => {
+  showState = !showState;
+  if (showState) {
+    document.getElementById("show").innerText = "Hide";
+    showNotes();
+  }
+  else {
+    document.getElementById("show").innerText = "Show";
+    showName();
+  }
+};
+
 const nextCard = () => {
   lookup = getNext();
   showName();
