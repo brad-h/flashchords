@@ -110,33 +110,16 @@ const getNext = () => {
   const next = data[Math.floor(Math.random() * data.length)];
   return getInversion(next);
 };
-let lookup = getNext();
-
-const showName = () => {
-  document.getElementById("content").innerText = lookup.name;
-}
-const showNotes = () => {
-  document.getElementById("content").innerText = lookup.notes;
-};
-
-let showState = false;
-const showToggle = () => {
-  showState = !showState;
-  if (showState) {
-    document.getElementById("show").innerText = "Hide";
-    showNotes();
-  }
-  else {
-    document.getElementById("show").innerText = "Show";
-    showName();
-  }
-};
 
 const nextCard = () => {
-  lookup = getNext();
-  showName();
-  showState = true;
-  showToggle();
+  const lookup = getNext();
+  document.querySelector(".front").innerText = lookup.name;
+  document.querySelector(".back").innerText = lookup.notes;
 };
 
-document.addEventListener('DOMContentLoaded', nextCard);
+document.addEventListener("DOMContentLoaded", () => {
+  document.querySelector(".container").addEventListener("click", () => {
+    document.querySelector(".card").classList.toggle("flipped");
+  });  
+  nextCard();
+});
