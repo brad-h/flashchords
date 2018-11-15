@@ -74,7 +74,7 @@ const data = [
   dominant("B D# F# A"),
   minor("B D F# A"),
   halfDiminished("B D F A"),
-  diminished("B D G Ab")
+  diminished("B D F Ab")
 ];
 
 const getInversion = chord => {
