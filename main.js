@@ -108,7 +108,7 @@ const getInversion = (i, chord) => {
 const getInversions = chord => {
   const response = [];
   for (let i = 0; i < chord.notes.length; i++) {
-    response.add(getInversion(i, chord));
+    response.push(getInversion(i, chord));
   }
   return response;
 };
