@@ -125,7 +125,7 @@ const flatMap = (xs, f) => {
 
 // https://en.wikipedia.org/wiki/Fisher%E2%80%93Yates_shuffle
 const shuffle = xs => {
-  for (let i  = xs.length - 1; i > 0; i++) {
+  for (let i  = xs.length - 1; i > 0; i--) {
     const j = Math.floor(Math.random() * i)
     const temp = xs[i];
     xs[i] = xs[j];
