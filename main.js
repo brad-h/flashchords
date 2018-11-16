@@ -117,7 +117,7 @@ const flatMap = (xs, f) => {
   var response = [];
   for (let x of xs) {
     for (let y of f(x)) {
-      response.add(y);
+      response.push(y);
     }
   }
   return response;
