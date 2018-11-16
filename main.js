@@ -77,8 +77,7 @@ const data = [
   diminished("B D F Ab")
 ];
 
-const getInversion = chord => {
-  const i = Math.floor(Math.random() * chord.notes.length);
+const getInversion = (i, chord) => {
   const inversion = chord.notes.slice(i).concat(chord.notes.slice(0, i));
   switch (i) {
     case 0:
@@ -106,10 +105,44 @@ const getInversion = chord => {
   }
 };
 
-const getNext = () => {
-  const next = data[Math.floor(Math.random() * data.length)];
-  return getInversion(next);
+const getInversions = chord => {
+  const response = [];
+  for (let i = 0; i < chord.notes.length; i++) {
+    response.add(getInversion(i, chord));
+  }
+  return response;
 };
+
+const flatMap = (xs, f) => {
+  var response = [];
+  for (let x of xs) {
+    for (let y of f(x)) {
+      response.add(y);
+    }
+  }
+  return response;
+};
+
+// https://en.wikipedia.org/wiki/Fisher%E2%80%93Yates_shuffle
+const shuffle = xs => {
+  for (let i  = xs.length - 1; i > 0; i++) {
+    const j = Math.floor(Math.random() * i)
+    const temp = xs[i];
+    xs[i] = xs[j];
+    xs[j] = temp;
+  }
+};
+
+let deck = [];
+
+const getNext = () => {
+  if (deck.length === 0) {
+    deck = flatMap(data, getInversions);
+    shuffle(deck);
+  }
+  return deck.pop();
+};
+
 let lookup = getNext();
 
 const showName = () => {
