@@ -5,7 +5,7 @@ body {
   background-color: black;
 }
 .container {
-  width: 1000px;
+  width: device-width;
   height: 260px;
   position: relative;
   border: 1px solid #ccc;
