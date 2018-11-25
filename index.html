@@ -9,10 +9,12 @@
     <script src="main.js"></script>
 </head>
 <body>
-    <div id="app">
-        <button id="show" onclick="showToggle()">Show</button>
-        <button id="next" onclick="nextCard()">Next</button>
-        <h1 id="content"></h1>
-    </div>
+  <button onclick="nextCard()">Next</button>
+  <section class="container">
+      <div class="card" onclick="flip()">
+        <div class="front">1</div>
+        <div class="back">2</div>
+      </div>
+    </section>
 </body>
 </html>
