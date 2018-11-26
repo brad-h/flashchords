@@ -157,7 +157,7 @@ const nextCard = () => {
   lookup = getNext();
   document.querySelector(".card").classList.remove("flipped");
   const frontBack = [".front", ".back"];
-  const [front, back] = mode === "Name" ? frontBack : frontBack.reverse();
+  const [front, back] = mode === "Spell" ? frontBack : frontBack.reverse();
   showName(front);
   showNotes(back);
 };
