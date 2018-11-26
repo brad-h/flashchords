@@ -143,20 +143,30 @@ const getNext = () => {
   return deck.pop();
 };
 let lookup = null;
+let mode = null;
 
-const showName = () => {
-  document.querySelector(".front").innerText = lookup.name;
+const showName = side => {
+  document.querySelector(side).innerText = lookup.name;
 }
 
-const showNotes = () => {
-  document.querySelector(".back").innerText = lookup.notes;
+const showNotes = side => {
+  document.querySelector(side).innerText = lookup.notes;
 };
 
 const nextCard = () => {
   lookup = getNext();
   document.querySelector(".card").classList.remove("flipped");
-  showName();
-  showNotes();
+  const frontBack = [".front", ".back"];
+  const [front, back] = mode === "Name" ? frontBack : frontBack.reverse();
+  showName(front);
+  showNotes(back);
+};
+
+const selectMode = element => {
+  document.querySelector(".mode").style.display = "none";
+  document.querySelector(".app").style.display = "";
+  mode = element.innerText;
+  nextCard();
 };
 
 const flip = () => {

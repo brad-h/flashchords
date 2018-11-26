@@ -3,6 +3,12 @@
 
 body {
   background-color: black;
+  font-family: fantasy;
+}
+button {
+  font-size: 6rem;
+  background-color: darkslategrey;
+  color: white;
 }
 .container {
   width: device-width;
@@ -37,15 +43,21 @@ body {
   color: white;
   text-align: center;
   font-weight: bold;
-  font-size: 100px;
+  font-size: 10rem;
   position: absolute;
   -webkit-backface-visibility: hidden;
   -moz-backface-visibility: hidden;
   -o-backface-visibility: hidden;
   backface-visibility: hidden;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
 }
 .card .front {
-background: rgb(54, 3, 3);
+  background: rgb(54, 3, 3);
 }
 .card .back {
   background: rgb(2, 2, 43);

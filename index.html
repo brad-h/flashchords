@@ -9,12 +9,19 @@
     <script src="main.js"></script>
 </head>
 <body>
-  <button onclick="nextCard()">Next</button>
-  <section class="container">
+  <div class="mode">
+    <button onclick="selectMode(this)">Name</button>
+    <br />
+    <button onclick="selectMode(this)">Spell</button>
+  </div>
+  <div class="app" style="display: none">
+    <section class="container">
       <div class="card" onclick="flip()">
         <div class="front">1</div>
         <div class="back">2</div>
       </div>
     </section>
+    <button onclick="nextCard()">Next</button>
+  </div>
 </body>
 </html>
