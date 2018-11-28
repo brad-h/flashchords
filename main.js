@@ -137,11 +137,13 @@ let deck = [];
 
 const getNext = () => {
   if (deck.length === 0) {
-    deck = flatMap(data, getInversions);
-    shuffle(deck);
+    document.querySelector(".mode").style.display = "";
+    document.querySelector(".app").style.display = "none";
+    return;
   }
   return deck.pop();
 };
+
 let lookup = null;
 let mode = null;
 
@@ -155,6 +157,7 @@ const showNotes = side => {
 
 const nextCard = () => {
   lookup = getNext();
+  if (!lookup) return;
   document.querySelector(".card").classList.remove("flipped");
   const frontBack = [".front", ".back"];
   const [front, back] = mode === "Spell" ? frontBack : frontBack.reverse();
@@ -166,11 +169,11 @@ const selectMode = element => {
   document.querySelector(".mode").style.display = "none";
   document.querySelector(".app").style.display = "";
   mode = element.innerText;
+  deck = flatMap(data, getInversions);
+  shuffle(deck);
   nextCard();
 };
 
 const flip = () => {
   document.querySelector(".card").classList.toggle("flipped");
 };
-
-document.addEventListener('DOMContentLoaded', nextCard);
