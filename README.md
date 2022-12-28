@@ -1,4 +1,4 @@
-# flashchords
+# [flashchords](https://brad-h.github.io/flashchords/)
 
 Flash cards of chords.
 
@@ -10,6 +10,6 @@ All 12 keys. All 5 qualities:
 * Half-Diminished
 * Diminished
 
-All inverions
+All inversions
 
 All Roman numerals
