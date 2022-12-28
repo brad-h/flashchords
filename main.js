@@ -12,95 +12,68 @@ const createFunction = (key, function_, notes) => {
     "notes": note
   }
 }
-const major = (notes, I, IV) => [
-  createChord("M7", notes),
-  createFunction(I, "I", notes),
-  IV instanceof Array ? createFunction(IV[0], "IV", "IV[1]"): createFunction(IV, "IV", notes)
-]
-const dominant = (notes, V) => [
-  createChord("7", notes),
-  createFunction(V, "V", notes)
-]
-const minor = (notes, ii, iii, vi) => [
-  createChord("m7", notes),
-  ...Object.entries({
-    "ii": ii,
-    "iii": iii,
-    "vi": vi
-  }).map(([function_, key]) =>
-    key instanceof Array ? createFunction(key[0], function_, key[1]) : createFunction(key, function_, notes))
-]
-const halfDiminished = (notes, vii) => [
-  createChord("m7b5", notes),
-  createFunction(vii, "vii", notes)
-]
-const diminished = notes => [createChord("dim", notes)]
+const major = (notes) => createChord("M7", notes)
+const dominant = (notes) => createChord("7", notes)
+const minor = (notes) => createChord("m7", notes)
+const halfDiminished = (notes) => createChord("m7b5", notes)
+const diminished = notes => createChord("dim", notes)
 
-// there's probably a clever/cute way to derive all this
-// information that I'm not going to bother to figure
-// out right now, but later... maybe
-const data = [
-  major("C E G B", "C", "F"),
-  dominant("C E G Bb", "F"),
-  minor("C Eb G Bb", "Bb", "Ab", "Eb"),
-  halfDiminished("C Eb Gb Bb", "Db"),
-  diminished("C Eb Gb Bbb"),
-  major("Db F Ab C", "Db", "Ab"),
-  dominant("Db F Ab Cb", "Gb"),
-  minor("C# E G# B", "B", "A", "E"),
-  halfDiminished("C# E G B", "D"),
-  diminished("C# E G Bb"),
-  major("D F# A C#", "D", "A"),
-  dominant("D F# A C", "G"),
-  minor("D F A C", "C", "Bb", "F"),
-  halfDiminished("D F Ab C", "Eb"),
-  diminished("D F Ab Cb"),
-  major("Eb G Bb D", "Eb", "Bb"),
-  dominant("Eb G Bb Db", "Ab"),
-  minor("Eb Gb Bb Db", "Db", ["B", "D# F# A# C#"], "Gb"),
-  halfDiminished("D# F# A C#", "E"),
-  diminished("D# F# A C"),
-  major("E G# B D#", "E", "B"),
-  dominant("E G# B D", "A"),
-  minor("E G B D", "D", "C", "G"),
-  halfDiminished("E G Bb D", "F"),
-  diminished("E G Bb Db"),
-  major("F A C E", "F", "C"),
-  dominant("F A C Eb", "Bb"),
-  minor("F Ab C Eb", "Eb", "Db", "Ab"),
-  halfDiminished("F Ab Cb Eb", "Gb"),
-  diminished("F Ab Cb Ebb"),
-  major("Gb Bb Db F", "Gb", "Dd"),
-  dominant("F# A# C# E", "B"),
-  minor("F# A C# E", "E", "D", "A"),
-  halfDiminished("F# A C E", "G"),
-  diminished("F# A C Eb"),
-  major("G B D F#", "G", "D"),
-  dominant("G B D F", "C"),
-  minor("G Bb D F", "F", "Eb", "Bb"),
-  halfDiminished("G Bb Db F", "Ab"),
-  diminished("G Bb Db Fb"),
-  major("Ab C Eb G", "Ab", "Eb"),
-  dominant("Ab C Eb Gb", "Db"),
-  minor("Ab Cb Eb Gb", "Gb", ["E", "G# B D# F#"], ["B", "G# B D# F#"]),
-  halfDiminished("G# B D F#", "A"),
-  diminished("G# B D F"),
-  major("A C# E G#", "A", "E"),
-  dominant("A C# E G", "D"),
-  minor("A C E G", "G", "F", "C"),
-  halfDiminished("A C Eb G", "Bb"),
-  diminished("A C Eb Gb"),
-  major("Bb D F A", "Bb", "F"),
-  dominant("Bb D F Ab", "Eb"),
-  minor("Bb Db F Ab", "Ab", "Gb", "Db"),
-  halfDiminished("A# C# E G#", "B"),
-  diminished("A# C# E G"),
-  major("B D# F# A#", "B", ["Gb", "Cb Eb Gb Bb"]),
-  dominant("B D# F# A", "E"),
-  minor("B D F# A", "A", "G", "D"),
-  halfDiminished("B D F A", "C"),
-  diminished("B D F Ab")
+// there's probably a clever/cute way to derive keys
+// from the circle of fifths, but this is fine for now
+const keys = [
+  "C D E F G A B",
+  "Db Eb F Gb Ab Bb C",
+  "D E F# G A B C#",
+  "Eb F G Ab Bb C D",
+  "F G A Bb C D E",
+  "Gb Ab Bb Cb Db Eb F",
+  "G A B C D E F#",
+  "Ab Bb C Db Eb F G",
+  "A B C# D E F# G#",
+  "Bb C D Eb F G A",
+  "B C# D# E F# G# A#"
 ]
+const functions = scale => {
+  const scaletones = scale.split(" ")
+  const key = scaletones[0]
+  const func = (function_, chordtones) =>
+    createFunction(key, function_, chordtones.map(x => scaletones[x-1]).join(" "))
+  return [
+    func("I", [1, 3, 5, 7]),
+    func("ii", [2, 4, 6, 1]),
+    func("iii", [3, 5, 7, 2]),
+    func("IV", [4, 6, 1, 3]),
+    func("V", [5, 7, 2, 4]),
+    func("vi", [6, 1, 3, 5]),
+    func("vii", [7, 2, 4, 6])
+  ]
+}
+const qualities = scale => {
+  const scaletones = scale.split(" ")
+  const func = (quality, chordtones) =>
+    quality(chordtones.map(x => scaletones[x-1]).join(" "))
+  return [
+    func(major, [1, 3, 5, 7]),
+    func(minor, [2, 4, 6, 1]),
+    func(dominant, [5, 7, 2, 4]),
+    func(halfDiminished, [7, 2, 4, 6])
+  ]
+}
+const data = keys.flatMap(qualities)
+  .concat([
+  diminished("C Eb Gb Bbb"),
+  diminished("C# E G Bb"),
+  diminished("D F Ab Cb"),
+  diminished("D# F# A C"),
+  diminished("E G Bb Db"),
+  diminished("F Ab Cb Ebb"),
+  diminished("F# A C Eb"),
+  diminished("G Bb Db Fb"),
+  diminished("G# B D F"),
+  diminished("A C Eb Gb"),
+  diminished("A# C# E G"),
+  diminished("B D F Ab")
+])
 
 const getInversion = (i, chord) => {
   const inversion = chord.notes.slice(i).concat(chord.notes.slice(0, i))
@@ -184,7 +157,7 @@ const selectMode = element => {
   document.querySelector(".mode").style.display = "none"
   document.querySelector(".app").style.display = ""
   mode = element.innerText
-  deck = (mode === "Spell" ? data.flat() : data.map(x => x[0])).flatMap(getInversions)
+  deck = (mode === "Spell" ? data.concat(keys.flatMap(functions)) : data).flatMap(getInversions)
   shuffle(deck)
   nextCard()
 }
