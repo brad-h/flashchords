@@ -34,7 +34,7 @@ const halfDiminished = (notes, vii) => [
   createChord("m7b5", notes),
   createFunction(vii, "vii", notes)
 ]
-const diminished = notes => createChord("dim", notes)
+const diminished = notes => [createChord("dim", notes)]
 
 // there's probably a clever/cute way to derive all this
 // information that I'm not going to bother to figure
@@ -100,7 +100,7 @@ const data = [
   minor("B D F# A", "A", "G", "D"),
   halfDiminished("B D F A", "C"),
   diminished("B D F Ab")
-].flat()
+]
 
 const getInversion = (i, chord) => {
   const inversion = chord.notes.slice(i).concat(chord.notes.slice(0, i))
@@ -184,7 +184,7 @@ const selectMode = element => {
   document.querySelector(".mode").style.display = "none"
   document.querySelector(".app").style.display = ""
   mode = element.innerText
-  deck = data.flatMap(getInversions)
+  deck = (mode === "Spell" ? data.flat() : data.map(x => x[0])).flatMap(getInversions)
   shuffle(deck)
   nextCard()
 }
